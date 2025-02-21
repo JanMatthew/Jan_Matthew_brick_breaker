@@ -9,7 +9,7 @@ import 'bat.dart';
 
 class Brick extends RectangleComponent
 with CollisionCallbacks, HasGameReference<BrickBreaker> {
-  int resistence = 2;
+  int resistence;
   Brick({required super.position, required Color color,required this.resistence})
   : super(
     size: Vector2(brickWidth, brickHeight),
@@ -38,7 +38,14 @@ with CollisionCallbacks, HasGameReference<BrickBreaker> {
         game.world.removeAll(game.world.children.query<Bat>());
       }
       if((game.world.children.query<Brick>().length - 1)%5 == 0){
-        game.world.children.query<Bat>().first.size *=0.90;
+        final bat = game.world.children.query<Bat>().first;
+        final originalSize = bat.size.clone();
+        bat.size *= 0.50;
+        Future.delayed(Duration(seconds: 5), () {
+          if (bat.isMounted) { // Verificamos que siga en el juego
+            bat.size = originalSize*0.95;
+          }
+        });
       }
     }else{
       playBrickSound();

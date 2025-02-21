@@ -32,11 +32,11 @@ with DragCallbacks, HasGameReference<BrickBreaker> {
   @override
   void onDragUpdate(DragUpdateEvent event) {
     super.onDragUpdate(event);
-    position.x = (position.x + event.localDelta.x).clamp(0+ batWidth/2                 , game.width-batWidth/2);
+    position.x = (position.x + event.localDelta.x).clamp(0+ size.x/2                 , game.width-size.x/2);
   }
   void moveBy(double dx) {
     add(MoveToEffect(
-      Vector2((position.x + dx).clamp(0 + batWidth/2, game.width-batWidth/2), position.y),
+      Vector2((position.x + dx).clamp(0 + size.x/2, game.width-size.x/2), position.y),
       EffectController(duration: 0.1),
     ));
   }
